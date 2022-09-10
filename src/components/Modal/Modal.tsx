@@ -23,8 +23,8 @@ function Modal({ children, opened, target = document.body }: ModalProps) {
   if (!opened || !mounted || !ref.current) return null;
 
   return createPortal(
-    <div className="absolute flex items-center justify-center w-full h-full bg-transparent top-0 left-0">
-      <div className="w-60 h-60 bg-indigo-300">{children}</div>
+    <div className="absolute bg-gray-800/70 flex items-center justify-center w-full h-full top-0 left-0">
+      <div className="w-1/3 h-fit bg-slate-600">{children}</div>
     </div>,
     ref.current
   );
