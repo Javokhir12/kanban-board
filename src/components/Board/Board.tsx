@@ -1,4 +1,5 @@
 import { useAppContext } from '../../context';
+import { addColumn } from '../../context/actions';
 import { IColumn } from '../../models/column';
 import { IIssue } from '../../models/issue';
 import AddNewColumn from '../Column/AddNewColumn';
@@ -9,9 +10,8 @@ function Board() {
   const { columns, dispatch } = useAppContext();
 
   const onAddColumn = () => {
-    dispatch({
-      type: 'ADD_COLUMN',
-      payload: {
+    dispatch(
+      addColumn({
         issues: [
           {
             points: 1,
@@ -19,9 +19,9 @@ function Board() {
             title: 'Fix accessibility issues',
           },
         ],
-        title: 'To Do',
-      },
-    });
+        title: 'Done',
+      })
+    );
   };
 
   return (
