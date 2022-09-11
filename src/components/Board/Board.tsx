@@ -1,26 +1,32 @@
+import { useState } from 'react';
 import { useAppContext } from '../../context';
-import { addColumn } from '../../context/actions';
 import { IColumn } from '../../models/column';
 import { IIssue } from '../../models/issue';
 import AddNewColumn from '../Column/AddNewColumn';
 import Column from '../Column/Column';
 import IssueCard from '../IssueCard/IssueCard';
+import Modal from '../Modal/Modal';
+import NewColumn from '../NewColumn/NewColumn';
 
 function Board() {
-  const { columns, dispatch } = useAppContext();
+  const { columns } = useAppContext();
+  const [modalOpen, setModalOpen] = useState(false);
 
-  const onAddColumn = () => {
-    dispatch(
-      addColumn({
-        title: 'Todo',
-      })
-    );
+  const openModal = (): void => {
+    setModalOpen(true);
+  };
+
+  const closeModal = (): void => {
+    setModalOpen(false);
   };
 
   return (
     <section className="bg-slate-800 grow flex justify-start overflow-auto">
       {renderColumns(columns)}
-      <AddNewColumn onAddColumn={onAddColumn} />
+      <AddNewColumn openModal={openModal} />
+      <Modal handleClose={closeModal} opened={modalOpen}>
+        <NewColumn closeModal={closeModal} />
+      </Modal>
     </section>
   );
 }

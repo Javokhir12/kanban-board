@@ -4,7 +4,6 @@ import Header from './components/Header/Header';
 import Modal from './components/Modal/Modal';
 import NewIssue from './components/NewIssue/NewIssue';
 import './App.css';
-import { useAppContext } from './context';
 
 function App() {
   const [modalOpen, setModalOpen] = useState(false);

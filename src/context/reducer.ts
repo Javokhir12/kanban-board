@@ -6,7 +6,6 @@ export function reducer(state: IColumn[] = [], action: ActionType) {
     case ADD_COLUMN:
       return [...state, action.payload];
     case ADD_ISSUE: {
-      console.log('Add issue', action);
       const { status } = action.payload;
       return state.map((column) => {
         if (column.title !== status) return column;
