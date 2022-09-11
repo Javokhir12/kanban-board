@@ -1,1 +1,1 @@
-# Kanban board web app built with React and TypeScript.
+# Kanban board web app built with React, TypeScript and TailwindCSS.
