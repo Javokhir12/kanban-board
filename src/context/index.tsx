@@ -18,11 +18,11 @@ const AppContext = createContext<IAppContext | null>(null);
 
 const initialState: IColumn[] = [
   {
-    title: 'In progress',
+    title: 'Todo',
     issues: [
       {
         points: 4,
-        status: 'In progress',
+        status: 'Todo',
         title: 'Fix UI bug',
       },
     ],

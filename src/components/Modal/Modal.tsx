@@ -5,9 +5,15 @@ export interface ModalProps {
   children: ReactNode;
   opened: boolean;
   target?: HTMLElement | string;
+  handleClose: () => void;
 }
 
-function Modal({ children, opened, target = document.body }: ModalProps) {
+function Modal({
+  children,
+  opened,
+  target = document.body,
+  handleClose,
+}: ModalProps) {
   const [mounted, setMounted] = useState(false);
   const ref = useRef<HTMLElement>();
 
@@ -23,8 +29,17 @@ function Modal({ children, opened, target = document.body }: ModalProps) {
   if (!opened || !mounted || !ref.current) return null;
 
   return createPortal(
-    <div className="absolute bg-gray-800/70 flex items-center justify-center w-full h-full top-0 left-0">
-      <div className="w-1/3 h-fit bg-slate-600">{children}</div>
+    <div
+      onClick={handleClose}
+      className="absolute bg-gray-800/70 flex items-center justify-center w-full h-full top-0 left-0"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{ width: '500px' }}
+        className="w-fit h-fit bg-slate-600"
+      >
+        {children}
+      </div>
     </div>,
     ref.current
   );
