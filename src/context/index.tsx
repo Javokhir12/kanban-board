@@ -18,6 +18,7 @@ const AppContext = createContext<IAppContext | null>(null);
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [value, dispatch] = useReducer(reducer, []);
+
   const ctxValue = { columns: value, dispatch };
   // const ctxValue = useMemo(() => ({ boards: value, dispatch }), [value]);
 

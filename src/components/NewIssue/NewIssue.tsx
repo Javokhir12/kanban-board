@@ -1,10 +1,9 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useAppContext } from '../../context';
-import { addIssue } from '../../context/actions';
 import { IIssue } from '../../models/issue';
 
 export interface NewIssueProps {
-  closeModal: () => void;
+  onCreateIssue: (issue: IIssue) => void;
 }
 
 export interface FormState {
@@ -19,8 +18,8 @@ const initialFormState: FormState = {
   status: '',
 };
 
-function NewIssue({ closeModal }: NewIssueProps) {
-  const { dispatch, columns } = useAppContext();
+function NewIssue({ onCreateIssue }: NewIssueProps) {
+  const { columns } = useAppContext();
 
   const statuses = columns.map((column) => column.title);
 
@@ -48,9 +47,8 @@ function NewIssue({ closeModal }: NewIssueProps) {
       points: parseFloat(fromValues.points),
     };
 
-    dispatch(addIssue(newIssue));
     setFormValues(initialFormState);
-    closeModal();
+    onCreateIssue(newIssue);
   };
 
   const isValid = Object.values(fromValues).every((value) => value !== '');

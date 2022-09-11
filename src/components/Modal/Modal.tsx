@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 export interface ModalProps {
@@ -28,9 +28,14 @@ function Modal({
 
   if (!opened || !mounted || !ref.current) return null;
 
+  const onClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.stopPropagation();
+    handleClose();
+  };
+
   return createPortal(
     <div
-      onClick={handleClose}
+      onClick={onClose}
       className="absolute bg-gray-800/70 flex items-center justify-center w-full h-full top-0 left-0"
     >
       <div

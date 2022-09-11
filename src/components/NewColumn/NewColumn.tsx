@@ -1,15 +1,11 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { useAppContext } from '../../context';
-import { addColumn } from '../../context/actions';
 import { IColumn } from '../../models/column';
 
 export interface NewColumnProps {
-  closeModal: () => void;
+  onCreateColumn: (column: IColumn) => void;
 }
 
-function NewColumn({ closeModal }: NewColumnProps) {
-  const { dispatch } = useAppContext();
-
+function NewColumn({ onCreateColumn }: NewColumnProps) {
   const [title, setTitle] = useState('');
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -24,8 +20,8 @@ function NewColumn({ closeModal }: NewColumnProps) {
       issues: [],
     };
 
-    dispatch(addColumn(newColumn));
-    closeModal();
+    setTitle('');
+    onCreateColumn(newColumn);
   };
 
   const isValid = title !== '';
