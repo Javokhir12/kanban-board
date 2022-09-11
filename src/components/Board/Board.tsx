@@ -12,14 +12,7 @@ function Board() {
   const onAddColumn = () => {
     dispatch(
       addColumn({
-        issues: [
-          {
-            points: 1,
-            status: 'To Do',
-            title: 'Fix accessibility issues',
-          },
-        ],
-        title: 'Done',
+        title: 'Todo',
       })
     );
   };

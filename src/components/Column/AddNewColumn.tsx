@@ -7,7 +7,7 @@ function AddNewColumn({ onAddColumn }: AddNewColumnProps) {
   return (
     <div
       onClick={onAddColumn}
-      className={`m-4 py-2 px-10 flex items-center justify-center hover:shadow-lg hover:shadow-slate-700 hover:cursor-pointer ${classes.addColumn}`}
+      className={`m-4 py-2 px-10 flex items-center justify-center hover:shadow-lg hover:shadow-slate-700 hover:cursor-pointer ${classes.columnWidth}`}
     >
       <h2 className="text-center text-gray-300 text-2xl font-extrabold">
         + New Column

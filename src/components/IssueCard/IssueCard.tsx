@@ -5,7 +5,7 @@ export interface IssueCardPorps {
 
 function IssueCard({ title, points }: IssueCardPorps) {
   return (
-    <article className="bg-slate-700 w-64 m-2 rounded-lg py-3 px-5 shadow-md shadow-slate-700">
+    <article className="bg-slate-700 w-64 m-4 rounded-lg py-3 px-5 shadow-sm shadow-slate-700">
       <h3 className="text-lg font-semibold">{title}</h3>
       <p className="text-gray-200">{pluralizePoints(points)}</p>
     </article>

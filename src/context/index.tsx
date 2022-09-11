@@ -16,21 +16,8 @@ export interface IAppContext {
 
 const AppContext = createContext<IAppContext | null>(null);
 
-const initialState: IColumn[] = [
-  {
-    title: 'Todo',
-    issues: [
-      {
-        points: 4,
-        status: 'Todo',
-        title: 'Fix UI bug',
-      },
-    ],
-  },
-];
-
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [value, dispatch] = useReducer(reducer, initialState);
+  const [value, dispatch] = useReducer(reducer, []);
   const ctxValue = { columns: value, dispatch };
   // const ctxValue = useMemo(() => ({ boards: value, dispatch }), [value]);
 

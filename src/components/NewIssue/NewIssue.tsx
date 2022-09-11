@@ -1,7 +1,10 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { useAppContext } from '../../context';
+import { addIssue } from '../../context/actions';
+import { IIssue } from '../../models/issue';
 
 export interface NewIssueProps {
-  statuses: string[];
+  closeModal: () => void;
 }
 
 export interface FormState {
@@ -10,11 +13,22 @@ export interface FormState {
   status: string;
 }
 
-function NewIssue() {
-  const [fromValues, setFormValues] = useState<FormState>({
-    title: '',
-    points: '',
-    status: '',
+const initialFormState: FormState = {
+  title: '',
+  points: '',
+  status: '',
+};
+
+function NewIssue({ closeModal }: NewIssueProps) {
+  const { dispatch, columns } = useAppContext();
+
+  const statuses = columns.map((column) => column.title);
+
+  const [fromValues, setFormValues] = useState<FormState>((): FormState => {
+    return {
+      ...initialFormState,
+      status: statuses[0],
+    };
   });
 
   function handleChange<T extends HTMLInputElement | HTMLSelectElement>(
@@ -28,10 +42,27 @@ function NewIssue() {
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(fromValues);
+
+    const newIssue: IIssue = {
+      ...fromValues,
+      points: parseFloat(fromValues.points),
+    };
+
+    dispatch(addIssue(newIssue));
+    setFormValues(initialFormState);
+    closeModal();
   };
 
   const isValid = Object.values(fromValues).every((value) => value !== '');
+
+  if (statuses.length === 0)
+    return (
+      <article className="h-52 flex items-center justify-center">
+        <h2 className="text-xl text-white font-extrabold">
+          Please create a column first
+        </h2>
+      </article>
+    );
 
   return (
     <form
@@ -79,15 +110,18 @@ function NewIssue() {
           onChange={handleChange}
           className="p-3 w-full rounded-md text-slate-500 focus:outline-4 outline-indigo-400"
         >
-          <option value="To Do">Todo</option>
-          <option value="Done">Done</option>
+          {statuses.map((status) => (
+            <option key={status} value={status}>
+              {status}
+            </option>
+          ))}
         </select>
       </p>
       <p className="mt-9">
         <button
           type="submit"
           disabled={!isValid}
-          className="bg-indigo-400 px-6 py-2 font-semibold rounded-xl w-full"
+          className="bg-indigo-400 disabled:bg-indigo-200 disabled:cursor-not-allowed px-6 py-2 font-semibold rounded-xl w-full"
         >
           Create Task
         </button>
