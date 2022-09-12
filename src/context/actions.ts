@@ -3,6 +3,7 @@ import { IIssue } from '../models/issue';
 
 export const ADD_COLUMN = 'ADD_COLUMN';
 export const ADD_ISSUE = 'ADD_ISSUE';
+export const EDIT_ISSUE = 'EDIT_ISSUE';
 
 export const addColumn = (column: IColumn) =>
   ({
@@ -16,6 +17,13 @@ export const addIssue = (issue: IIssue) =>
     payload: issue,
   } as const);
 
+export const editIssue = (issue: IIssue) =>
+  ({
+    type: EDIT_ISSUE,
+    payload: issue,
+  } as const);
+
 export type ActionType =
   | ReturnType<typeof addColumn>
-  | ReturnType<typeof addIssue>;
+  | ReturnType<typeof addIssue>
+  | ReturnType<typeof editIssue>;

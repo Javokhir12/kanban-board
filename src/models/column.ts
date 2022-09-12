@@ -1,6 +1,4 @@
-import { IIssue } from './issue';
-
 export interface IColumn {
-  issues?: IIssue[];
+  id: string;
   title: string;
 }

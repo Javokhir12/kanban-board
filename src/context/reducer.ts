@@ -1,20 +1,48 @@
 import { IColumn } from '../models/column';
-import { ActionType, ADD_COLUMN, ADD_ISSUE } from './actions';
+import { IIssue } from '../models/issue';
+import { ActionType, ADD_COLUMN, ADD_ISSUE, EDIT_ISSUE } from './actions';
 
-export function reducer(state: IColumn[] = [], action: ActionType) {
+export interface AppStateInterace {
+  columns: {
+    [columnId: string]: IColumn;
+  };
+  issues: {
+    [issueId: string]: IIssue;
+  };
+}
+
+export const initialAppState: AppStateInterace = {
+  columns: {},
+  issues: {},
+};
+
+export function reducer(
+  state = initialAppState,
+  action: ActionType
+): AppStateInterace {
   switch (action.type) {
-    case ADD_COLUMN:
-      return [...state, action.payload];
-    case ADD_ISSUE: {
-      const { status } = action.payload;
-      return state.map((column) => {
-        if (column.title !== status) return column;
+    case ADD_COLUMN: {
+      const column = action.payload;
 
-        return {
-          ...column,
-          issues: [...(column.issues || []), action.payload],
-        };
-      });
+      return {
+        ...state,
+        columns: {
+          ...state.columns,
+          [column.id]: column,
+        },
+      };
+    }
+    case EDIT_ISSUE:
+    case ADD_ISSUE: {
+      const issue = action.payload;
+
+      return {
+        ...state,
+        issues: {
+          ...state.issues,
+          [issue.id]: issue,
+        },
+      };
     }
     default:
       return state;

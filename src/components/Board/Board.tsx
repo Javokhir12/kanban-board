@@ -6,11 +6,13 @@ import Column from '../Column/Column';
 import IssueCard from '../IssueCard/IssueCard';
 
 function Board() {
-  const { columns } = useAppContext();
+  const {
+    state: { columns, issues },
+  } = useAppContext();
 
   return (
     <section className="bg-slate-800 grow flex justify-start overflow-auto">
-      {renderColumns(columns)}
+      {renderColumns(Object.values(columns), Object.values(issues))}
       <AddNewColumn />
     </section>
   );
@@ -18,20 +20,29 @@ function Board() {
 
 export default Board;
 
-function renderColumns(columns: IColumn[]) {
-  return columns.map((column, i) => (
-    <Column key={column.title + i} title={column.title}>
-      {renderIssues(column.issues)}
+export function renderColumns(columns: IColumn[] = [], issues: IIssue[] = []) {
+  return columns.map(({ id, title }) => (
+    <Column key={id} title={title}>
+      {renderIssues(getIssuesWithColumnId(issues, id))}
     </Column>
   ));
 }
 
-function renderIssues(issues: IIssue[] = []) {
-  return issues.map((issue, j) => (
+export function renderIssues(issues: IIssue[] = []) {
+  return issues.map(({ id, title, points, columnId }) => (
     <IssueCard
-      key={issue.title + j}
-      title={issue.title}
-      points={issue.points}
+      key={id}
+      title={title}
+      points={points}
+      status={columnId}
+      id={id}
     />
   ));
+}
+
+export function getIssuesWithColumnId(
+  issues: IIssue[],
+  columnId: string
+): IIssue[] {
+  return issues.filter((issue) => issue.columnId === columnId);
 }

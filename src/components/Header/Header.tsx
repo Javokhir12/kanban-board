@@ -1,10 +1,9 @@
-import { useState } from 'react';
 import { useAppContext } from '../../context';
 import { addIssue } from '../../context/actions';
 import { useModal } from '../../hooks/useModal';
 import { IIssue } from '../../models/issue';
 import Modal from '../Modal/Modal';
-import NewIssue from '../NewIssue/NewIssue';
+import IssueForm from '../NewIssue/IssueForm';
 
 function Header() {
   const { dispatch } = useAppContext();
@@ -36,7 +35,7 @@ function Header() {
         </u>
       </nav>
       <Modal opened={modalOpen} handleClose={closeModal}>
-        <NewIssue onCreateIssue={onCreateIssue} />
+        <IssueForm handleSubmit={onCreateIssue} />
       </Modal>
     </>
   );

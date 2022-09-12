@@ -6,13 +6,12 @@ import {
   useEffect,
   useReducer,
 } from 'react';
-import { IColumn } from '../models/column';
 import { ActionType } from './actions';
-import { reducer } from './reducer';
+import { AppStateInterace, initialAppState, reducer } from './reducer';
 import * as Storage from '../storage';
 
 export interface IAppContext {
-  columns: IColumn[];
+  state: AppStateInterace;
   dispatch: Dispatch<ActionType>;
 }
 
@@ -21,13 +20,13 @@ export const COLUMNS_STORAGE_KEY = '@kanban/columns';
 const AppContext = createContext<IAppContext | null>(null);
 
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [value, dispatch] = useReducer(reducer, [], initState);
+  const [value, dispatch] = useReducer(reducer, initialAppState, initState);
 
   useEffect(() => {
     Storage.setItem(COLUMNS_STORAGE_KEY, value);
   }, [value]);
 
-  const ctxValue = { columns: value, dispatch };
+  const ctxValue = { state: value, dispatch };
   // const ctxValue = useMemo(() => ({ boards: value, dispatch }), [value]);
 
   return <AppContext.Provider value={ctxValue}>{children}</AppContext.Provider>;

@@ -1,10 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useAppContext } from '../../context';
 import { IIssue } from '../../models/issue';
-
-export interface NewIssueProps {
-  onCreateIssue: (issue: IIssue) => void;
-}
+import { v4 as uuidv4 } from 'uuid';
 
 export interface FormState {
   title: string;
@@ -12,27 +9,44 @@ export interface FormState {
   status: string;
 }
 
-const initialFormState: FormState = {
+const defaultFormState: FormState = {
   title: '',
   points: '',
   status: '',
 };
 
-function NewIssue({ onCreateIssue }: NewIssueProps) {
-  const { columns } = useAppContext();
+export interface IssueFormProps {
+  handleSubmit: (issue: IIssue) => void;
+  initialFormState?: FormState;
+  formHeaderLabel?: string;
+  submitButtonLabel?: string;
+  issueId?: string;
+}
 
-  const statuses = columns.map((column) => column.title);
+function IssueForm({
+  handleSubmit,
+  initialFormState = defaultFormState,
+  formHeaderLabel = 'Add New Task',
+  submitButtonLabel = 'Create Task',
+  issueId = uuidv4(),
+}: IssueFormProps) {
+  const {
+    state: { columns },
+  } = useAppContext();
 
-  const [fromValues, setFormValues] = useState<FormState>((): FormState => {
+  const statuses = Object.values(columns).map(({ id, title }) => ({
+    value: id,
+    label: title,
+  }));
+
+  const [fromValues, setFormValues] = useState((): FormState => {
     return {
       ...initialFormState,
-      status: statuses[0],
+      status: initialFormState.status || statuses[0]?.value,
     };
   });
 
-  function handleChange<T extends HTMLInputElement | HTMLSelectElement>(
-    e: ChangeEvent<T>
-  ) {
+  function handleChange(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     setFormValues((state) => ({
       ...state,
       [e.target.name]: e.target.value,
@@ -42,13 +56,17 @@ function NewIssue({ onCreateIssue }: NewIssueProps) {
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const { points, status, title } = fromValues;
+
     const newIssue: IIssue = {
-      ...fromValues,
-      points: parseFloat(fromValues.points),
+      columnId: status,
+      id: issueId,
+      points: parseFloat(points),
+      title,
     };
 
-    setFormValues(initialFormState);
-    onCreateIssue(newIssue);
+    setFormValues(defaultFormState);
+    handleSubmit(newIssue);
   };
 
   const isValid = Object.values(fromValues).every((value) => value !== '');
@@ -67,7 +85,7 @@ function NewIssue({ onCreateIssue }: NewIssueProps) {
       onSubmit={onSubmit}
       className="px-12 pt-8 pb-12 flex flex-col justify-center"
     >
-      <h2 className="text-2xl">Add New Task</h2>
+      <h2 className="text-2xl">{formHeaderLabel}</h2>
 
       <p>
         <label htmlFor="issue-title" className="block my-4">
@@ -108,9 +126,9 @@ function NewIssue({ onCreateIssue }: NewIssueProps) {
           onChange={handleChange}
           className="p-3 w-full rounded-md text-slate-500 focus:outline-4 outline-indigo-400"
         >
-          {statuses.map((status) => (
-            <option key={status} value={status}>
-              {status}
+          {statuses.map(({ value, label }) => (
+            <option key={value} value={value}>
+              {label}
             </option>
           ))}
         </select>
@@ -121,11 +139,11 @@ function NewIssue({ onCreateIssue }: NewIssueProps) {
           disabled={!isValid}
           className="bg-indigo-400 disabled:bg-indigo-200 disabled:cursor-not-allowed px-6 py-2 font-semibold rounded-xl w-full"
         >
-          Create Task
+          {submitButtonLabel}
         </button>
       </p>
     </form>
   );
 }
 
-export default NewIssue;
+export default IssueForm;

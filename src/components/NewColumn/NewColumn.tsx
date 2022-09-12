@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { IColumn } from '../../models/column';
+import { v4 as uuidv4 } from 'uuid';
 
 export interface NewColumnProps {
   onCreateColumn: (column: IColumn) => void;
@@ -16,8 +17,8 @@ function NewColumn({ onCreateColumn }: NewColumnProps) {
     e.preventDefault();
 
     const newColumn: IColumn = {
+      id: uuidv4(),
       title,
-      issues: [],
     };
 
     setTitle('');
