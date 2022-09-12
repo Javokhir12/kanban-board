@@ -6,7 +6,7 @@
 ## Tasks
 - [x] Add `sessionStorage` support
 - [ ] Add support for `drag-and-drop`
-- [ ] Add support for editing
+- [x] Add support for editing
 - [ ] Improve responsiveness
 - [ ] Improve accessibility
 - [ ] Hook up with backend (possibly `Firebase`)
