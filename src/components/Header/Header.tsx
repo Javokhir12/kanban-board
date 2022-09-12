@@ -1,21 +1,14 @@
 import { useState } from 'react';
 import { useAppContext } from '../../context';
 import { addIssue } from '../../context/actions';
+import { useModal } from '../../hooks/useModal';
 import { IIssue } from '../../models/issue';
 import Modal from '../Modal/Modal';
 import NewIssue from '../NewIssue/NewIssue';
 
 function Header() {
   const { dispatch } = useAppContext();
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const openModal = (): void => {
-    setModalOpen(true);
-  };
-
-  const closeModal = (): void => {
-    setModalOpen(false);
-  };
+  const { modalOpen, openModal, closeModal } = useModal(false);
 
   const onCreateIssue = (issue: IIssue): void => {
     dispatch(addIssue(issue));

@@ -10,6 +10,7 @@ import { IColumn } from '../models/column';
 import { ActionType } from './actions';
 import { reducer } from './reducer';
 import * as Storage from '../storage';
+
 export interface IAppContext {
   columns: IColumn[];
   dispatch: Dispatch<ActionType>;

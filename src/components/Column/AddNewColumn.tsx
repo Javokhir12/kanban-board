@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAppContext } from '../../context';
 import { addColumn } from '../../context/actions';
+import { useModal } from '../../hooks/useModal';
 import { IColumn } from '../../models/column';
 import Modal from '../Modal/Modal';
 import NewColumn from '../NewColumn/NewColumn';
@@ -8,15 +9,7 @@ import classes from './Column.module.css';
 
 function AddNewColumn() {
   const { dispatch } = useAppContext();
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const openModal = (): void => {
-    setModalOpen(true);
-  };
-
-  const closeModal = (): void => {
-    setModalOpen(false);
-  };
+  const { modalOpen, openModal, closeModal } = useModal(false);
 
   const onCreateColumn = (column: IColumn): void => {
     dispatch(addColumn(column));
