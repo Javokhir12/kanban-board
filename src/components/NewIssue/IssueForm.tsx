@@ -83,7 +83,7 @@ function IssueForm({
   return (
     <form
       onSubmit={onSubmit}
-      className="px-12 pt-8 pb-12 flex flex-col justify-center"
+      className="px-12 pt-8 pb-12 flex flex-col justify-center dark:text-white"
     >
       <h2 className="text-2xl">{formHeaderLabel}</h2>
 
@@ -98,7 +98,7 @@ function IssueForm({
           value={fromValues.title}
           placeholder="e.g. Take coffee break"
           id="issue-title"
-          className="p-3 rounded-md w-full outline-0 text-slate-500 focus:outline-4 outline-indigo-400"
+          className="bg-gray-200 p-3 rounded-md w-full outline-0 text-slate-500 focus:outline-4 outline-indigo-400"
         />
       </p>
       <p>
@@ -112,7 +112,7 @@ function IssueForm({
           onChange={handleChange}
           placeholder="e.g. 3"
           id="issue-points"
-          className="p-3 w-full rounded-md outline-0 text-slate-500 focus:outline-4 outline-indigo-400"
+          className="bg-gray-200 p-3 w-full rounded-md outline-0 text-slate-500 focus:outline-4 outline-indigo-400"
         />
       </p>
       <p>
@@ -124,7 +124,7 @@ function IssueForm({
           value={fromValues.status}
           id="issue-status"
           onChange={handleChange}
-          className="p-3 w-full rounded-md text-slate-500 focus:outline-4 outline-indigo-400"
+          className="bg-gray-200 p-3 w-full rounded-md text-slate-500 focus:outline-4 outline-indigo-400"
         >
           {statuses.map(({ value, label }) => (
             <option key={value} value={value}>

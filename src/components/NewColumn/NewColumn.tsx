@@ -30,7 +30,7 @@ function NewColumn({ onCreateColumn }: NewColumnProps) {
   return (
     <form
       onSubmit={onSubmit}
-      className="px-12 pt-8 pb-12 flex flex-col justify-center"
+      className="px-12 pt-8 pb-12 flex flex-col justify-center dark:text-white"
     >
       <h2 className="text-2xl">Add New Column</h2>
 
@@ -45,7 +45,7 @@ function NewColumn({ onCreateColumn }: NewColumnProps) {
           value={title}
           placeholder="e.g. Take coffee break"
           id="issue-title"
-          className="p-3 rounded-md w-full outline-0 text-slate-500 focus:outline-4 outline-indigo-400"
+          className="p-3 rounded-md w-full bg-gray-200 outline-0 dark:text-slate-600 focus:outline-4 outline-indigo-400"
         />
       </p>
       <p className="mt-9">

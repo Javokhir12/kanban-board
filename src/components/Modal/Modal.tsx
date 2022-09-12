@@ -41,7 +41,7 @@ function Modal({
       <div
         onClick={(e) => e.stopPropagation()}
         style={{ width: '500px' }}
-        className="w-fit h-fit bg-slate-600"
+        className="w-fit h-fit bg-white dark:bg-slate-600"
       >
         {children}
       </div>

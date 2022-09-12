@@ -10,7 +10,7 @@ export interface IssueCardPorps {
   title: string;
   points: number;
   status: string;
-  id: string
+  id: string;
 }
 
 function IssueCard({ title, points, status, id }: IssueCardPorps) {
@@ -33,14 +33,16 @@ function IssueCard({ title, points, status, id }: IssueCardPorps) {
 
   return (
     <>
-      <article className="bg-slate-700 w-64 m-4 rounded-lg py-3 px-5 shadow-sm shadow-slate-700">
+      <article className="bg-gray-100 dark:bg-slate-700 w-80 m-4 rounded-lg py-3 px-5 shadow-sm shadow-slate-700">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold">{title}</h3>
+          <h3 className="text-lg font-semibold dark:text-white break-words">
+            {title}
+          </h3>
           <span onClick={openModal} className="hover:cursor-pointer">
             &#9998;
           </span>
         </div>
-        <p className="text-gray-200">{pluralizePoints(points)}</p>
+        <p className="dark:text-gray-200 my-2">{pluralizePoints(points)}</p>
       </article>
       <Modal opened={modalOpen} handleClose={closeModal}>
         <IssueForm

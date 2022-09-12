@@ -17,7 +17,7 @@ export interface IAppContext {
 
 export const COLUMNS_STORAGE_KEY = '@kanban/columns';
 
-const AppContext = createContext<IAppContext | null>(null);
+const AppContext = createContext<IAppContext | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [value, dispatch] = useReducer(reducer, initialAppState, initState);
@@ -33,17 +33,17 @@ export function AppProvider({ children }: { children: ReactNode }) {
 }
 
 export function useAppContext() {
-  const c = useContext(AppContext);
-  if (c == null)
+  const ctx = useContext(AppContext);
+  if (ctx == undefined)
     throw new Error('useAppContext must be inside a Provider with a value');
-  return c;
+  return ctx;
 }
 
 function initState<T>(initialState: T): T {
   try {
-    const columns = Storage.getItem(COLUMNS_STORAGE_KEY) as T;
+    const columns = Storage.getItem(COLUMNS_STORAGE_KEY);
 
-    return columns ?? initialState;
+    return (columns ?? initialState) as T;
   } catch (error) {
     console.error(error);
 

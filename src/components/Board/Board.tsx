@@ -11,7 +11,7 @@ function Board() {
   } = useAppContext();
 
   return (
-    <section className="bg-slate-800 grow flex justify-start overflow-auto">
+    <section className="bg-gray-300 dark:bg-slate-800 grow flex justify-start overflow-auto">
       {renderColumns(Object.values(columns), Object.values(issues))}
       <AddNewColumn />
     </section>
