@@ -25,15 +25,15 @@ function Header() {
   return (
     <>
       <nav>
-        <u className="py-6 px-16 flex list-none bg-white dark:bg-slate-700 justify-between items-center">
+        <ul className="py-6 px-16 flex list-none bg-white dark:bg-slate-700 justify-between items-center">
           <li>
-            <span className="tracking-wide font-semibold dark:text-white text-3xl antialiased no-underline">
+            <span className="tracking-wide font-semibold dark:text-white text-3xl antialiased">
               Kanban
             </span>
           </li>
           <li className="flex justify-between items-center">
             <span
-              className="dark:text-white block mx-6 text-2xl hover:cursor-pointer"
+              className="text-yellow-500 dark:text-yellow-300 block mx-6 text-3xl hover:cursor-pointer"
               onClick={() => setIsDark((state) => !state)}
             >
               {!isDark ? <>&#9789;</> : <>&#9728;</>}
@@ -46,7 +46,7 @@ function Header() {
               + Add New Task
             </button>
           </li>
-        </u>
+        </ul>
       </nav>
       <Modal opened={modalOpen} handleClose={closeModal}>
         <IssueForm handleSubmit={onCreateIssue} />

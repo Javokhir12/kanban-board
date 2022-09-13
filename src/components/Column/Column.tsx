@@ -9,7 +9,7 @@ export interface ColumnProps {
 function Column({ title, children }: ColumnProps) {
   return (
     <div className={`m-4 p-2 ${classes.columnWidth}`}>
-      <h2 className="text-center text-gray-300 text-xl">{title}</h2>
+      <h2 className="text-center dark:text-gray-300 text-xl">{title}</h2>
       {children}
     </div>
   );

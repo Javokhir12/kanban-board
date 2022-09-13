@@ -73,7 +73,7 @@ function IssueForm({
 
   if (statuses.length === 0)
     return (
-      <article className="h-52 flex items-center justify-center">
+      <article className="h-52 flex items-center justify-center bg-indigo-400 dark:bg-transparent">
         <h2 className="text-xl text-white font-extrabold">
           Please create a column first
         </h2>

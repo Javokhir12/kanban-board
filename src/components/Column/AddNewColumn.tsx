@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useAppContext } from '../../context';
 import { addColumn } from '../../context/actions';
 import { useModal } from '../../hooks/useModal';
