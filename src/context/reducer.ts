@@ -1,6 +1,12 @@
 import { IColumn } from '../models/column';
 import { IIssue } from '../models/issue';
-import { ActionType, ADD_COLUMN, ADD_ISSUE, EDIT_ISSUE } from './actions';
+import {
+  ActionType,
+  ADD_COLUMN,
+  ADD_ISSUE,
+  EDIT_ISSUE,
+  SET_DRAGGED_ISSUE,
+} from './actions';
 
 export interface AppStateInterace {
   columns: {
@@ -9,11 +15,13 @@ export interface AppStateInterace {
   issues: {
     [issueId: string]: IIssue;
   };
+  currentDraggedIssue: string;
 }
 
 export const initialAppState: AppStateInterace = {
   columns: {},
   issues: {},
+  currentDraggedIssue: '',
 };
 
 export function reducer(
@@ -42,6 +50,12 @@ export function reducer(
           ...state.issues,
           [issue.id]: issue,
         },
+      };
+    }
+    case SET_DRAGGED_ISSUE: {
+      return {
+        ...state,
+        currentDraggedIssue: action.payload,
       };
     }
     default:

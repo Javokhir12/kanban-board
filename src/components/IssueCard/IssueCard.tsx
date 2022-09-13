@@ -1,6 +1,8 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useDrag } from 'react-dnd';
+import { ItemTypes } from '../../constants';
 import { useAppContext } from '../../context';
-import { editIssue } from '../../context/actions';
+import { editIssue, setDraggedIssue } from '../../context/actions';
 import { useModal } from '../../hooks/useModal';
 import { IIssue } from '../../models/issue';
 import Modal from '../Modal/Modal';
@@ -16,6 +18,21 @@ export interface IssueCardPorps {
 function IssueCard({ title, points, status, id }: IssueCardPorps) {
   const { dispatch } = useAppContext();
   const { modalOpen, openModal, closeModal } = useModal(false);
+
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: ItemTypes.ISSU_CARD,
+    collect: (monitor: any) => {
+      return {
+        isDragging: !!monitor.isDragging(),
+      };
+    },
+  }));
+
+  useEffect(() => {
+    if (isDragging) {
+      dispatch(setDraggedIssue(id));
+    }
+  }, [isDragging]);
 
   const initialFormState = useMemo(
     () => ({
@@ -33,12 +50,18 @@ function IssueCard({ title, points, status, id }: IssueCardPorps) {
 
   return (
     <>
-      <article className="bg-gray-100 dark:bg-slate-700 w-80 m-4 rounded-lg py-3 px-5 shadow-sm shadow-slate-700">
+      <article
+        ref={drag}
+        className="bg-gray-100 cursor-move dark:bg-slate-700 w-80 m-4 rounded-lg py-3 px-5 shadow-sm shadow-slate-700"
+      >
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold dark:text-white break-words">
             {title}
           </h3>
-          <span onClick={openModal} className="hover:cursor-pointer">
+          <span
+            onClick={openModal}
+            className="hover:cursor-pointer dark:text-white"
+          >
             &#9998;
           </span>
         </div>

@@ -1,3 +1,5 @@
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useAppContext } from '../../context';
 import { IColumn } from '../../models/column';
 import { IIssue } from '../../models/issue';
@@ -11,10 +13,12 @@ function Board() {
   } = useAppContext();
 
   return (
-    <section className="bg-gray-300 dark:bg-slate-800 grow flex justify-start overflow-auto">
-      {renderColumns(Object.values(columns), Object.values(issues))}
-      <AddNewColumn />
-    </section>
+    <DndProvider backend={HTML5Backend}>
+      <section className="bg-gray-300 dark:bg-slate-800 grow flex justify-start overflow-auto">
+        {renderColumns(Object.values(columns), Object.values(issues))}
+        <AddNewColumn />
+      </section>
+    </DndProvider>
   );
 }
 
@@ -22,7 +26,7 @@ export default Board;
 
 export function renderColumns(columns: IColumn[] = [], issues: IIssue[] = []) {
   return columns.map(({ id, title }) => (
-    <Column key={id} title={title}>
+    <Column key={id} id={id} title={title}>
       {renderIssues(getIssuesWithColumnId(issues, id))}
     </Column>
   ));
