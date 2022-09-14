@@ -7,7 +7,7 @@
 - [x] Add `sessionStorage` support
 - [x] Add support for `dark/light` mode
 - [x] Add support for editing
-- [ ] Add support for `drag-and-drop`
+- [x] Add support for `drag-and-drop`
 - [ ] Improve responsiveness
 - [ ] Improve accessibility
 - [ ] Hook up with backend (possibly `Firebase`)
