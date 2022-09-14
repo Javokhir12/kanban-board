@@ -1,12 +1,12 @@
 import { useEffect, useMemo } from 'react';
 import { useDrag } from 'react-dnd';
-import { ItemTypes } from '../../constants';
+import Modal from '../Modal/Modal';
+import IssueForm from '../NewIssue/IssueForm';
 import { useAppContext } from '../../context';
 import { editIssue, setDraggedIssue } from '../../context/actions';
 import { useModal } from '../../hooks/useModal';
 import { IIssue } from '../../models/issue';
-import Modal from '../Modal/Modal';
-import IssueForm from '../NewIssue/IssueForm';
+import { ItemTypes } from '../../constants';
 
 export interface IssueCardPorps {
   title: string;
@@ -21,18 +21,23 @@ function IssueCard({ title, points, status, id }: IssueCardPorps) {
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes.ISSU_CARD,
+    previewOptions: {
+      
+    },
+
+    item: () => {
+      dispatch(setDraggedIssue(id));
+      return { id };
+    },
     collect: (monitor: any) => {
       return {
         isDragging: !!monitor.isDragging(),
       };
     },
+    end: () => {
+      dispatch(setDraggedIssue(undefined));
+    },
   }));
-
-  useEffect(() => {
-    if (isDragging) {
-      dispatch(setDraggedIssue(id));
-    }
-  }, [isDragging]);
 
   const initialFormState = useMemo(
     () => ({
@@ -50,23 +55,25 @@ function IssueCard({ title, points, status, id }: IssueCardPorps) {
 
   return (
     <>
-      <article
-        ref={drag}
-        className="bg-gray-100 cursor-move dark:bg-slate-700 w-80 m-4 rounded-lg py-3 px-5 shadow-sm shadow-slate-700"
-      >
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold dark:text-white break-words">
-            {title}
-          </h3>
-          <span
-            onClick={openModal}
-            className="hover:cursor-pointer dark:text-white"
-          >
-            &#9998;
-          </span>
-        </div>
-        <p className="dark:text-gray-200 my-2">{pluralizePoints(points)}</p>
-      </article>
+      {!isDragging && (
+        <article
+          ref={drag}
+          className="bg-gray-100 cursor-move dark:bg-slate-700 w-80 m-4 rounded-lg py-3 px-5 shadow-sm shadow-slate-700"
+        >
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-semibold dark:text-white break-words">
+              {title}
+            </h3>
+            <span
+              onClick={openModal}
+              className="hover:cursor-pointer dark:text-white"
+            >
+              &#9998;
+            </span>
+          </div>
+          <p className="dark:text-gray-200 my-2">{pluralizePoints(points)}</p>
+        </article>
+      )}
       <Modal opened={modalOpen} handleClose={closeModal}>
         <IssueForm
           handleSubmit={handleEditIssue}

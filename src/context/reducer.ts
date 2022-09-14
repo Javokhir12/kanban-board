@@ -15,13 +15,13 @@ export interface AppStateInterace {
   issues: {
     [issueId: string]: IIssue;
   };
-  currentDraggedIssue: string;
+  currentDraggedIssue: string | undefined;
 }
 
 export const initialAppState: AppStateInterace = {
   columns: {},
   issues: {},
-  currentDraggedIssue: '',
+  currentDraggedIssue: undefined,
 };
 
 export function reducer(

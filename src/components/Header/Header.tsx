@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { useAppContext } from '../../context';
 import { addIssue } from '../../context/actions';
 import { useThemeContext } from '../../context/theme-context';
-import { useModal } from '../../hooks/useModal';
-import { IIssue } from '../../models/issue';
 import Modal from '../Modal/Modal';
 import IssueForm from '../NewIssue/IssueForm';
+import { useModal } from '../../hooks/useModal';
+import { IIssue } from '../../models/issue';
 
 function Header() {
   const { dispatch } = useAppContext();

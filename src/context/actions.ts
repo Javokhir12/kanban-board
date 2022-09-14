@@ -24,7 +24,7 @@ export const editIssue = (issue: IIssue) =>
     payload: issue,
   } as const);
 
-export const setDraggedIssue = (issueId: string) =>
+export const setDraggedIssue = (issueId: string | undefined) =>
   ({
     type: SET_DRAGGED_ISSUE,
     payload: issueId,

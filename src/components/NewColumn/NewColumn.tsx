@@ -1,6 +1,6 @@
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
-import { IColumn } from '../../models/column';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { IColumn } from '../../models/column';
 import { useFocus } from '../../hooks/useFocus';
 
 export interface NewColumnProps {
