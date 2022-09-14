@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { useAppContext } from '../../context';
 import { IIssue } from '../../models/issue';
 import { v4 as uuidv4 } from 'uuid';
+import { useFocus } from '../../hooks/useFocus';
 
 export interface FormState {
   title: string;
@@ -33,6 +34,7 @@ function IssueForm({
   const {
     state: { columns },
   } = useAppContext();
+  const inputRef = useFocus();
 
   const statuses = Object.values(columns).map(({ id, title }) => ({
     value: id,
@@ -92,6 +94,7 @@ function IssueForm({
           Title
         </label>
         <input
+          ref={inputRef}
           onChange={handleChange}
           name="title"
           type="text"

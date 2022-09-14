@@ -1,6 +1,7 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import { IColumn } from '../../models/column';
 import { v4 as uuidv4 } from 'uuid';
+import { useFocus } from '../../hooks/useFocus';
 
 export interface NewColumnProps {
   onCreateColumn: (column: IColumn) => void;
@@ -8,6 +9,7 @@ export interface NewColumnProps {
 
 function NewColumn({ onCreateColumn }: NewColumnProps) {
   const [title, setTitle] = useState('');
+  const inputRef = useFocus();
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setTitle(e.target.value);
@@ -39,6 +41,7 @@ function NewColumn({ onCreateColumn }: NewColumnProps) {
           Title
         </label>
         <input
+          ref={inputRef}
           onChange={handleChange}
           name="title"
           type="text"

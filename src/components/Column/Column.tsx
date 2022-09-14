@@ -17,23 +17,21 @@ function Column({ id, title, children }: ColumnProps) {
     state: { currentDraggedIssue, issues },
   } = useAppContext();
 
-  const issue = issues[currentDraggedIssue];
-
-  if (issue) {
-    issue.columnId = id;
-  }
-
   const [{ isOver }, drop] = useDrop(
     () => ({
       accept: ItemTypes.ISSU_CARD,
       drop: () => {
-        dispatch(addIssue(issue));
+        if (currentDraggedIssue) {
+          const issue = issues[currentDraggedIssue];
+          issue.columnId = id;
+          dispatch(addIssue(issue));
+        }
       },
       collect: (monitor) => ({
         isOver: !!monitor.isOver(),
       }),
     }),
-    [issue]
+    [currentDraggedIssue]
   );
 
   console.log();
@@ -41,7 +39,7 @@ function Column({ id, title, children }: ColumnProps) {
     <div
       ref={drop}
       className={`m-4 p-2 ${classes.columnWidth} ${
-        isOver ? 'bg-slate-700' : ''
+        isOver ? 'dark:bg-slate-700 bg-gray-200' : ''
       }`}
     >
       <h2 className="text-center dark:text-gray-300 text-xl">{title}</h2>
