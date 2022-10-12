@@ -34,7 +34,6 @@ function Column({ id, title, children }: ColumnProps) {
     [currentDraggedIssue]
   );
 
-  console.log();
   return (
     <div
       ref={drop}
